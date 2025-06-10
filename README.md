@@ -59,13 +59,12 @@ The Endurance Framework is a highly modular and scalable Node.js project templat
     Example structure for a new module:
 
     ```
-    src/
-      modules/
-        your-module/
-          models/
-            YourModel.js
-          routes/
-            yourModule.router.js
+    modules/
+      your-module/
+        models/
+          YourModel.js
+        routes/
+          yourModule.router.js
     ```
 
 3. **Dynamic Module Loading**:
@@ -79,13 +78,12 @@ Here is an example of how to add a simple "login" module:
 1. **Create the module structure**:
 
     ```
-    src/
-      modules/
-        login/
-          models/
-            User.js
-          routes/
-            login.router.js
+    modules/
+      login/
+        models/
+          User.js
+        routes/
+          login.router.js
     ```
 
 2. **Define the model (`User.js`)**:
@@ -104,27 +102,14 @@ Here is an example of how to add a simple "login" module:
 3. **Define the route (`login.router.js`)**:
 
     ```javascript
-    import { EnduranceRouter, EnduranceRequest, Response } from 'endurance-core';
+    const router = require('endurance-core/lib/router')();
 
-    class LoginRouter extends EnduranceRouter {
-      protected setupRoutes(): void {
-        this.post(
-          '/login',
-          { requireAuth: false },
-          async (req: EnduranceRequest, res: Response) => {
-            // Exemple : extraire des infos du body
-            const { email, password } = req.body;
+    router.post('/login', (req, res) => {
+      // Your login logic here
+      res.send('Login route');
+    });
 
-            // TODO: ajouter la logique de login ici
-
-            res.json({ message: 'Login route', email });
-          }
-        );
-      }
-    }
-
-    // Exporter le router prêt à être utilisé par endurance-core
-    export default new LoginRouter().getRouter();
+    module.exports = router;
     ```
 
 ### Testing
